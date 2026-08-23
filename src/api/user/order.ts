@@ -30,7 +30,13 @@ export default class UserOrderHandler extends RequestHandler {
                     offCode: true,
                     address: true,
                     checks: true,
-                    payment: true
+                    payment: true,
+                    user: {
+                        select: {
+                            name: true,
+                            nationalCode: true
+                        }
+                    }
                 }
             }) || this.throw("سفارش یافت نشد");
         }

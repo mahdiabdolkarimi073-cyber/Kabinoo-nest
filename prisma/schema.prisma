@@ -190,6 +190,20 @@ model Variable {
   value Int         @default(0)
 }
 
+model HomepageContent {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  title       String
+  subtitle    String   @default("")
+  description String   @default("")
+  image       String   @default("")
+  buttonLabel String   @default("")
+  buttonHref  String   @default("")
+  enabled     Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  updatedAt   DateTime @updatedAt
+}
+
 model CartItem {
   id             String        @id @default(cuid())
   productId      String?
