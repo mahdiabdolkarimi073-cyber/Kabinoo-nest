@@ -459,6 +459,16 @@ model DesignPriceSetting {
   updatedAt      DateTime @updatedAt
 }
 
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  sortOrder Int      @default(0)
+  enabled   Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
 enum TicketStatus {
   OPEN
   ANSWERED

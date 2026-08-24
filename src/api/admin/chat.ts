@@ -1,12 +1,12 @@
 import PrismaFullHandler from "@/core/prisma.handler";
 
-export default class AdminOffCodesHandler extends PrismaFullHandler {
+export default class AdminChatHandler extends PrismaFullHandler {
 
     getModel() {
         return prisma.userChat;
     }
 
     getName() {
-        return "چت "
+        return "مشاوره آنلاین"
     }
 }

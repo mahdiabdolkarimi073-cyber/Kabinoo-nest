@@ -1,12 +1,12 @@
 import PrismaFullHandler from "@/core/prisma.handler";
 
-export default class PublicProducts extends PrismaFullHandler {
+export default class AdminAdviceHandler extends PrismaFullHandler {
     getModel() {
         return prisma.userAdvice;
     }
 
     getName() {
-        return "مشاوره"
+        return "درخواست تماس تلفنی"
     }
     
 }
