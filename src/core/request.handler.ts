@@ -100,7 +100,7 @@ export default class RequestHandler {
             if (!instance.request.originalUrl.startsWith('http')) instance.request.originalUrl = `http://localhost${req.url || ''}`;
         } catch {
         }
-        instance.params = req.params;
+        instance.params = req.params as Record<string, string>;
         instance.params = {
             ...instance.params,
             ...Object.fromEntries(new URL(req.originalUrl).searchParams.entries()),

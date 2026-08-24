@@ -25,6 +25,9 @@ export default class PublicProducts extends PrismaLimitHandler {
     async comments(@Req() req: Request, @Res() res: Response) {
         this.splitInstance(async function () {
             return await prisma.productComment.findMany({
+                where: {
+                    accepted: true
+                },
                 take: 10,
                 orderBy: {
                     created_at: "desc"

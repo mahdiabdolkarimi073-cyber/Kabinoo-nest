@@ -5,6 +5,16 @@ exports.ensureHomepageDefaults = ensureHomepageDefaults;
 const request_handler_1 = require("../../core/request.handler");
 exports.homepageDefaults = [
     {
+        key: "announcement",
+        title: "اطلاعیه کابینو",
+        subtitle: "ثبت سفارش و مشاوره طراحی",
+        description: "برای دریافت مشاوره رایگان و اطلاع از شرایط سفارش با ما در ارتباط باشید.",
+        image: "",
+        buttonLabel: "دریافت مشاوره",
+        buttonHref: "/counseling",
+        sortOrder: -1,
+    },
+    {
         key: "hero",
         title: "Kabinoo",
         subtitle: "همراه شما هستیم",
@@ -67,9 +77,18 @@ exports.homepageDefaults = [
 ];
 async function ensureHomepageDefaults() {
     const count = await prisma.homepageContent.count();
-    if (count > 0)
+    if (count === 0) {
+        await prisma.homepageContent.createMany({ data: exports.homepageDefaults });
         return;
-    await prisma.homepageContent.createMany({ data: exports.homepageDefaults });
+    }
+    const announcement = exports.homepageDefaults.find(item => item.key === "announcement");
+    if (announcement) {
+        await prisma.homepageContent.upsert({
+            where: { key: announcement.key },
+            update: {},
+            create: announcement,
+        });
+    }
 }
 class HomepageHandler extends request_handler_1.default {
     async GET() {

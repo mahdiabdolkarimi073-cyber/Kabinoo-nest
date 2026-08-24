@@ -13,35 +13,41 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
-const node_fs_1 = require("node:fs");
-const path = require("node:path");
-const process = require("node:process");
-const mime = require("mime-types");
-const upload_1 = require("../user/upload");
-const request_handler_1 = require("../../core/request.handler");
-const node_http_1 = require("node:http");
-class UploadedHandler extends request_handler_1.default {
-    async file(req) {
-        return this.splitInstance(function () {
-            const filePath = req.params['path'];
-            const _path = path.join(process.cwd(), upload_1.UPLOAD_DIR, Array.isArray(filePath) ? filePath[0] : filePath);
-            if (!(0, node_fs_1.existsSync)(_path)) {
-                return "404";
-            }
-            const st = (0, node_fs_1.createReadStream)(_path);
-            return new common_1.StreamableFile(st, {
-                type: mime.lookup(_path)
+const prisma_limited_handler_1 = require("../../core/prisma.limited.handler");
+class PublicCatalogHandler extends prisma_limited_handler_1.default {
+    getModel() {
+        return prisma.catalog;
+    }
+    getName() {
+        return "کاتالوگ";
+    }
+    async GET() {
+        return prisma.catalog.findMany({
+            where: { enabled: true },
+            orderBy: { sortOrder: "asc" },
+        });
+    }
+    async bySlug(req, res) {
+        this.splitInstance(async function () {
+            const slug = this.params.slug;
+            if (!slug)
+                this.throw("کاتالوگ یافت نشد");
+            const catalog = await prisma.catalog.findFirst({
+                where: { slug, enabled: true },
             });
-        }, req, (new node_http_1.ServerResponse(req)));
+            if (!catalog)
+                this.throw("کاتالوگ یافت نشد");
+            return catalog;
+        }, req, res);
     }
 }
-exports.default = UploadedHandler;
+exports.default = PublicCatalogHandler;
 __decorate([
-    (0, common_1.Get)(":path"),
-    (0, common_1.Header)('Cache-Control', 'max-age=3600'),
+    (0, common_1.Get)(":slug"),
     __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], UploadedHandler.prototype, "file", null);
-//# sourceMappingURL=file.js.map
+], PublicCatalogHandler.prototype, "bySlug", null);
+//# sourceMappingURL=catalog.js.map

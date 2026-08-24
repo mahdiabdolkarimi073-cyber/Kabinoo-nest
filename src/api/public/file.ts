@@ -16,7 +16,8 @@ export default class UploadedHandler extends RequestHandler {
     @Header('Cache-Control', 'max-age=3600')
     async file(@Req() req: Request) {
         return this.splitInstance(function () {
-            const _path = path.join(process.cwd(), UPLOAD_DIR, req.params['path']);
+            const filePath = req.params['path'];
+            const _path = path.join(process.cwd(), UPLOAD_DIR, Array.isArray(filePath) ? filePath[0] : filePath);
             if (!existsSync(_path)) {
                 return "404";
             }

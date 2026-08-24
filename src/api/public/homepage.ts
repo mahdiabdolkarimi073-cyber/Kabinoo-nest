@@ -2,6 +2,16 @@ import RequestHandler from "@/core/request.handler";
 
 export const homepageDefaults = [
     {
+        key: "announcement",
+        title: "اطلاعیه کابینو",
+        subtitle: "ثبت سفارش و مشاوره طراحی",
+        description: "برای دریافت مشاوره رایگان و اطلاع از شرایط سفارش با ما در ارتباط باشید.",
+        image: "",
+        buttonLabel: "دریافت مشاوره",
+        buttonHref: "/counseling",
+        sortOrder: -1,
+    },
+    {
         key: "hero",
         title: "Kabinoo",
         subtitle: "همراه شما هستیم",
@@ -65,8 +75,19 @@ export const homepageDefaults = [
 
 export async function ensureHomepageDefaults() {
     const count = await prisma.homepageContent.count();
-    if (count > 0) return;
-    await prisma.homepageContent.createMany({ data: homepageDefaults });
+    if (count === 0) {
+        await prisma.homepageContent.createMany({ data: homepageDefaults });
+        return;
+    }
+
+    const announcement = homepageDefaults.find(item => item.key === "announcement");
+    if (announcement) {
+        await prisma.homepageContent.upsert({
+            where: { key: announcement.key },
+            update: {},
+            create: announcement,
+        });
+    }
 }
 
 export default class HomepageHandler extends RequestHandler {

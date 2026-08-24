@@ -30,6 +30,9 @@ class PublicProducts extends prisma_limited_handler_1.default {
     async comments(req, res) {
         this.splitInstance(async function () {
             return await prisma.productComment.findMany({
+                where: {
+                    accepted: true
+                },
                 take: 10,
                 orderBy: {
                     created_at: "desc"
