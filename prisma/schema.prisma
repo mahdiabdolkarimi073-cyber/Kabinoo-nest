@@ -83,6 +83,7 @@ model Product {
   deliveryDays Int              @default(5)
   materialId   Int
   detailId     Int
+  detailIds    Int[]            @default([])
   categoryId   String
   designId     String?
   inCart       CartItem[]
@@ -328,6 +329,8 @@ model PaymentCheck {
   amount     Float
   checkId    String
   image      String
+  status     String   @default("PENDING")
+  adminNote  String?
   orderId    String
   order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
