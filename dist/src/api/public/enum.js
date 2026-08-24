@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const request_handler_1 = require("@/core/request.handler");
-const PrismaInfo_1 = require("prisma/PrismaInfo");
-const built_in_1 = require("@/utils/built-in");
+const request_handler_1 = require("../../core/request.handler");
+const PrismaInfo_1 = require("../../../prisma/PrismaInfo");
+const built_in_1 = require("../../utils/built-in");
 const client_1 = require("@prisma/client");
 class Enum extends request_handler_1.default {
     GET() {

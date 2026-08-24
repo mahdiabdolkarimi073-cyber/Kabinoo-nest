@@ -12,12 +12,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const IRTPayment_1 = require("@/core/payment/IRTPayment");
-const Payment_1 = require("@/core/payment/Payment");
-const global_1 = require("@/global");
+const IRTPayment_1 = require("../../core/payment/IRTPayment");
+const Payment_1 = require("../../core/payment/Payment");
+const global_1 = require("../../global");
 const common_1 = require("@nestjs/common");
-const string_1 = require("@/utils/string");
-const request_handler_1 = require("@/core/request.handler");
+const string_1 = require("../../utils/string");
+const request_handler_1 = require("../../core/request.handler");
 class Handler extends request_handler_1.default {
     async handle(name = this.request.method) {
         this.debug(name);

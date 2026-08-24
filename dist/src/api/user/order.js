@@ -12,11 +12,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const request_handler_1 = require("@/core/request.handler");
+const request_handler_1 = require("../../core/request.handler");
 const offCode_1 = require("./offCode");
 const common_1 = require("@nestjs/common");
-const built_in_1 = require("@/utils/built-in");
-const Payment_1 = require("@/core/payment/Payment");
+const built_in_1 = require("../../utils/built-in");
+const Payment_1 = require("../../core/payment/Payment");
+const sms_1 = require("../../utils/sms");
 class UserOrderHandler extends request_handler_1.default {
     async GET() {
         const id = this.params['id'];
@@ -38,7 +39,13 @@ class UserOrderHandler extends request_handler_1.default {
                     offCode: true,
                     address: true,
                     checks: true,
-                    payment: true
+                    payment: true,
+                    user: {
+                        select: {
+                            name: true,
+                            nationalCode: true
+                        }
+                    }
                 }
             }) || this.throw("سفارش یافت نشد");
         }
@@ -117,6 +124,10 @@ class UserOrderHandler extends request_handler_1.default {
                             orderId: order.id
                         }))
                     });
+                    await (0, sms_1.notifyUserSMS)(user.id, 'payment-success', [
+                        { name: 'code', value: String(order.code) },
+                        { name: 'price', value: prepay.toLocaleString('fa') },
+                    ]);
                 });
                 return {
                     link,
@@ -143,6 +154,10 @@ class UserOrderHandler extends request_handler_1.default {
                             paymentMethod: "DIRECT"
                         }
                     });
+                    await (0, sms_1.notifyUserSMS)(user.id, 'payment-success', [
+                        { name: 'code', value: String(order.code) },
+                        { name: 'price', value: order.finalPrice.toLocaleString('fa') },
+                    ]);
                 });
                 return {
                     link,
@@ -187,7 +202,7 @@ class UserOrderHandler extends request_handler_1.default {
         });
         if (!items.length)
             this.throw("هیچ محصولی در سبد خرید شما نیست!");
-        const totalPrice = items.reduce((i, o) => i + (o.product?.finalPrice || o?.custom?.price || 0), 0);
+        const totalPrice = items.reduce((i, o) => i + (o.product?.finalPrice || o?.custom?.price || 0) * o.quantity, 0);
         const finalPrice = totalPrice - (totalPrice / 100 * (offCode?.percent || 0));
         const order = await prisma.order.create({
             data: {
@@ -199,7 +214,8 @@ class UserOrderHandler extends request_handler_1.default {
                     createMany: {
                         data: items.map(o => ({
                             customDesignId: o.customDesignId,
-                            productId: o.productId
+                            productId: o.productId,
+                            quantity: o.quantity
                         }))
                     }
                 },
@@ -226,6 +242,10 @@ class UserOrderHandler extends request_handler_1.default {
                 userId: user.id
             }
         });
+        await (0, sms_1.notifyUserSMS)(user.id, 'order-created', [
+            { name: 'code', value: String(order.code) },
+            { name: 'price', value: finalPrice.toLocaleString('fa') },
+        ]);
         return order;
     }
 }

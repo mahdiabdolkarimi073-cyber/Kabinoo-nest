@@ -35,6 +35,7 @@ model User {
   chat           UserChat?
   isAuthor       Boolean          @default(false)
   articles       Article[]
+  contracts      Contract[]
 }
 
 model ProductColor {
@@ -310,6 +311,7 @@ model Payment {
   orders     Order[]
   user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   actions    PaymentAction[]
+  checks     PaymentCheck[]
 }
 
 model PaymentAction {
@@ -332,7 +334,39 @@ model PaymentCheck {
   status     String   @default("PENDING")
   adminNote  String?
   orderId    String
+  paymentId  String?
   order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  payment    Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+}
+
+/// @name قرارداد
+model Contract {
+  id          String   @id @default(cuid())
+  /// @name عنوان قرارداد
+  title       String
+  /// @name توضیحات
+  description String   @default("")
+  /// @name فایل قرارداد
+  file        String
+  /// @name وضعیت
+  status      ContractStatus @default(DRAFT)
+  /// @name تاریخ انقضا
+  expire_at   DateTime?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+  userId      String?
+  user        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum ContractStatus {
+  /// @name پیش‌نویس
+  DRAFT
+  /// @name فعال
+  ACTIVE
+  /// @name منقضی شده
+  EXPIRED
+  /// @name لغو شده
+  CANCELED
 }
 
 enum OrderPaymentMethod {

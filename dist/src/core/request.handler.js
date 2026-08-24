@@ -13,13 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
-const built_in_1 = require("@/utils/built-in");
-const request_1 = require("@/utils/request");
-const prisma_error_1 = require("@/core/prisma.error");
+const built_in_1 = require("../utils/built-in");
+const request_1 = require("../utils/request");
+const prisma_error_1 = require("./prisma.error");
 const ws_1 = require("ws");
-const ws_handler_1 = require("@/core/ws.handler");
-const global_1 = require("@/global");
-const string_1 = require("@/utils/string");
+const ws_handler_1 = require("./ws.handler");
+const global_1 = require("../global");
+const string_1 = require("../utils/string");
 class RequestHandler {
     request;
     res;

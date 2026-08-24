@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const request_handler_1 = require("@/core/request.handler");
-const string_1 = require("@/utils/string");
+const request_handler_1 = require("../../core/request.handler");
+const string_1 = require("../../utils/string");
 const process = require("node:process");
-const global_1 = require("@/global");
+const global_1 = require("../../global");
 class PhoneVerification extends request_handler_1.default {
     static MAX_ATTEMPTS = 5;
     static CODE_EXPIRY_MINUTES = 5;

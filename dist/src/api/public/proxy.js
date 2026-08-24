@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const request_handler_1 = require("@/core/request.handler");
+const request_handler_1 = require("../../core/request.handler");
 class ProxyHandler extends request_handler_1.default {
     async handle() {
         const url = this.get('url');

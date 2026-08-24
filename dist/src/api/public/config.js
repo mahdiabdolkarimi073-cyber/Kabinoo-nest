@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getVarConfig = getVarConfig;
-const request_handler_1 = require("@/core/request.handler");
-const PrismaInfo_1 = require("prisma/PrismaInfo");
+const request_handler_1 = require("../../core/request.handler");
+const PrismaInfo_1 = require("../../../prisma/PrismaInfo");
 class DesignHandler extends request_handler_1.default {
     async GET() {
         return await getVarConfig();

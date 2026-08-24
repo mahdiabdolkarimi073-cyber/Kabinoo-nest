@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const prisma_handler_1 = require("@/core/prisma.handler");
+const prisma_handler_1 = require("../../core/prisma.handler");
 class UserCardItem extends prisma_handler_1.default {
     getModel() {
         return prisma.cartItem;
@@ -10,8 +10,40 @@ class UserCardItem extends prisma_handler_1.default {
     }
     async additionalPayload() {
         return {
-            userId: (await this.getUser()).id
+            userId: (await this.getUser(true)).id
         };
+    }
+    async beforeCreate(fields) {
+        const quantity = Number(fields.quantity || 1);
+        if (!Number.isInteger(quantity) || quantity < 1)
+            this.need('quantity', 'تعداد باید حداقل یک باشد');
+        return {
+            ...fields,
+            quantity,
+        };
+    }
+    async POST() {
+        const user = await this.getUser(true);
+        const productId = this.json?.productId;
+        const customDesignId = this.json?.customDesignId;
+        const quantity = Number(this.json?.quantity || 1);
+        const existing = await prisma.cartItem.findFirst({
+            where: {
+                userId: user.id,
+                ...(productId ? { productId } : { customDesignId }),
+            },
+        });
+        if (existing) {
+            if (!Number.isInteger(quantity) || quantity < 1)
+                this.need('quantity', 'تعداد باید حداقل یک باشد');
+            await prisma.cartItem.update({
+                where: { id: existing.id },
+                data: { quantity: existing.quantity + quantity },
+            });
+            this.json.id = existing.id;
+            return this.GET();
+        }
+        return super.POST();
     }
 }
 exports.default = UserCardItem;

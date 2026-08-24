@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.initDB = void 0;
 exports.watchDB = watchDB;
 const client_1 = require("@prisma/client");
-const user_1 = require("@/api/user");
+const user_1 = require("../api/user");
 const instance = global.__instance ?? new client_1.PrismaClient();
 global.__instance ??= instance;
 let _EVENTS = {};

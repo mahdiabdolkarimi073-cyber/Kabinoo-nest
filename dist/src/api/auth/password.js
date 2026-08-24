@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const request_handler_1 = require("@/core/request.handler");
-const verify_1 = require("@api/auth/verify");
-const index_1 = require("@api/auth/index");
-const password_1 = require("@/utils/password");
+const request_handler_1 = require("../../core/request.handler");
+const verify_1 = require("./verify");
+const index_1 = require("./index");
+const password_1 = require("../../utils/password");
 class PublicProducts extends request_handler_1.default {
     async POST() {
         const { phone, password } = this.$_PARAMS({

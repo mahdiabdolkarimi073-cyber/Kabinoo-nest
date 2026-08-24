@@ -13,13 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserDbResult = void 0;
-const auth_1 = require("@/api/auth");
-const db_utils_1 = require("@/utils/db-utils");
+const auth_1 = require("../auth");
+const db_utils_1 = require("../../utils/db-utils");
 const common_1 = require("@nestjs/common");
-const password_1 = require("@/utils/password");
-const prisma_handler_1 = require("@/core/prisma.handler");
-const db_1 = require("@/core/db");
-const built_in_1 = require("@/utils/built-in");
+const password_1 = require("../../utils/password");
+const prisma_handler_1 = require("../../core/prisma.handler");
+const db_1 = require("../../core/db");
+const built_in_1 = require("../../utils/built-in");
 class UserHandler extends prisma_handler_1.default {
     static onMount() {
         (0, db_1.watchDB)("user", "User", ["create", 'update'], ({ args }) => {

@@ -18,7 +18,7 @@ const path = require("node:path");
 const process = require("node:process");
 const mime = require("mime-types");
 const upload_1 = require("../user/upload");
-const request_handler_1 = require("@/core/request.handler");
+const request_handler_1 = require("../../core/request.handler");
 const node_http_1 = require("node:http");
 class UploadedHandler extends request_handler_1.default {
     async file(req) {

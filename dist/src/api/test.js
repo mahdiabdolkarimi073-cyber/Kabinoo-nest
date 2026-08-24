@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Payment_1 = require("@/core/payment/Payment");
-const request_handler_1 = require("@/core/request.handler");
-const global_1 = require("@/global");
+const Payment_1 = require("../core/payment/Payment");
+const request_handler_1 = require("../core/request.handler");
+const global_1 = require("../global");
 class Test extends request_handler_1.default {
     async GET() {
         const user = await this.getUser();

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const db_1 = require("@/core/db");
-const prisma_handler_1 = require("@/core/prisma.handler");
-const string_1 = require("@/utils/string");
+const db_1 = require("../../core/db");
+const prisma_handler_1 = require("../../core/prisma.handler");
+const string_1 = require("../../utils/string");
 class Chat extends prisma_handler_1.default {
     static Connections = {};
     static onMount() {

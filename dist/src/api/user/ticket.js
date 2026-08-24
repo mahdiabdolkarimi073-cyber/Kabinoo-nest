@@ -12,7 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const prisma_handler_1 = require("@/core/prisma.handler");
+const prisma_handler_1 = require("../../core/prisma.handler");
 const common_1 = require("@nestjs/common");
 class DesignRequestHandler extends prisma_handler_1.default {
     async additionalPayload() {

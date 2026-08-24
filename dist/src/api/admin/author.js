@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const prisma_handler_1 = require("@/core/prisma.handler");
+const prisma_handler_1 = require("../../core/prisma.handler");
+const password_1 = require("../../utils/password");
+const index_1 = require("../auth/index");
 class AdminAuthorHandler extends prisma_handler_1.default {
     getModel() {
         return prisma.user;
@@ -42,6 +44,8 @@ class AdminAuthorHandler extends prisma_handler_1.default {
     async beforeCreate(fields) {
         return {
             ...fields,
+            phone: (0, index_1.finalizeUserPhone)(fields.phone),
+            password: await (0, password_1.hashPassword)(fields.password),
             isAuthor: true,
         };
     }

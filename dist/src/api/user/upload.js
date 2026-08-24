@@ -20,10 +20,10 @@ const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const fs = require("fs");
 const process = require("process");
-const string_1 = require("@/utils/string");
-const request_1 = require("@/utils/request");
+const string_1 = require("../../utils/string");
+const request_1 = require("../../utils/request");
 const path = require("node:path");
-const request_handler_1 = require("@/core/request.handler");
+const request_handler_1 = require("../../core/request.handler");
 class UserUpload extends request_handler_1.default {
     async test(body, res) {
         this.res = res;

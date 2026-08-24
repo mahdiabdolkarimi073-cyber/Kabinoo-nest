@@ -1,6 +1,10 @@
-import RequestHandler from "@/core/request.handler";
+import RequestHandler from "../../core/request.handler";
 export default class UserOrderHandler extends RequestHandler {
     GET(): Promise<({
+        user: {
+            name: string;
+            nationalCode: string;
+        };
         address: {
             id: string;
             phone: string;
@@ -32,8 +36,8 @@ export default class UserOrderHandler extends RequestHandler {
         products: ({
             product: {
                 name: string;
-                description: string;
                 id: string;
+                description: string;
                 created_at: Date;
                 price: number;
                 updated_at: Date;
@@ -48,6 +52,7 @@ export default class UserOrderHandler extends RequestHandler {
                 deliveryDays: number;
                 materialId: number;
                 detailId: number;
+                detailIds: number[];
                 categoryId: string;
                 designId: string | null;
                 finalPrice: number;
@@ -66,17 +71,21 @@ export default class UserOrderHandler extends RequestHandler {
             id: number;
             productId: string | null;
             customDesignId: string | null;
+            quantity: number;
             orderId: string;
         })[];
         checks: {
             id: number;
             created_at: Date;
             image: string;
-            amount: number;
-            orderId: string;
-            start_at: Date;
+            status: string;
+            paymentId: string | null;
             expire_at: Date;
+            start_at: Date;
+            amount: number;
             checkId: string;
+            adminNote: string | null;
+            orderId: string;
         }[];
     } & {
         id: string;
@@ -118,6 +127,7 @@ export default class UserOrderHandler extends RequestHandler {
             id: number;
             productId: string | null;
             customDesignId: string | null;
+            quantity: number;
             orderId: string;
         }[];
     } & {

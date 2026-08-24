@@ -5,8 +5,8 @@ const dotenv_1 = require("dotenv");
 const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const cookieParser = require("cookie-parser");
-const db_1 = require("@/core/db");
-const global_1 = require("@/global");
+const db_1 = require("./core/db");
+const global_1 = require("./global");
 const process = require("node:process");
 const node_http_1 = require("node:http");
 async function bootstrap() {

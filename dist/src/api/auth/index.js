@@ -13,11 +13,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.finalizeUserPhone = finalizeUserPhone;
-const request_handler_1 = require("@/core/request.handler");
-const password_1 = require("@/utils/password");
+const request_handler_1 = require("../../core/request.handler");
+const password_1 = require("../../utils/password");
 const common_1 = require("@nestjs/common");
-const string_1 = require("@/utils/string");
-const verify_1 = require("@api/auth/verify");
+const string_1 = require("../../utils/string");
+const verify_1 = require("./verify");
 class LoginHandler extends request_handler_1.default {
     static attempts = {};
     async postSignup(req, res) {

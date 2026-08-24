@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const global_1 = require("@/global");
-const built_in_1 = require("@/utils/built-in");
-const config_1 = require("@/api/public/config");
+const global_1 = require("../../global");
+const built_in_1 = require("../../utils/built-in");
+const config_1 = require("../../api/public/config");
 class IRTPayment {
     static MID = "";
     static async doPayment(payment) {

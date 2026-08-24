@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getValidOffCode = getValidOffCode;
-const request_handler_1 = require("@/core/request.handler");
-const built_in_1 = require("@/utils/built-in");
+const request_handler_1 = require("../../core/request.handler");
+const built_in_1 = require("../../utils/built-in");
 class OffCodeHandler extends request_handler_1.default {
     async GET() {
         const user = await this.getUser(true);

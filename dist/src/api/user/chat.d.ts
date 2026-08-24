@@ -1,4 +1,4 @@
-import PrismaFullHandler from "@/core/prisma.handler";
+import PrismaFullHandler from "../../core/prisma.handler";
 import { WebSocket } from "ws";
 export default class Chat extends PrismaFullHandler {
     static Connections: Record<string, Record<string, WebSocket>>;
@@ -116,8 +116,8 @@ export default class Chat extends PrismaFullHandler {
             phone: () => string;
         };
         messages: {
-            content: string;
             id: string;
+            content: string;
             isAdmin: boolean;
             created_at: Date;
             chatId: string;
@@ -146,8 +146,8 @@ export default class Chat extends PrismaFullHandler {
             phone: () => string;
         };
         messages: {
-            content: string;
             id: string;
+            content: string;
             isAdmin: boolean;
             created_at: Date;
             chatId: string;

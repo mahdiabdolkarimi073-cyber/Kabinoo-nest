@@ -4,6 +4,7 @@ import { getValidOffCode } from "./offCode";
 import { Get, Post, Req, Res } from "@nestjs/common";
 import { makeEnum, Throw } from '@/utils/built-in';
 import { getPaymentLink, onPaymentSuccessful } from "@/core/payment/Payment";
+import { notifyUserSMS } from "@/utils/sms";
 
 export default class UserOrderHandler extends RequestHandler {
 
@@ -128,6 +129,10 @@ export default class UserOrderHandler extends RequestHandler {
                             orderId: order.id
                         }))
                     })
+                    await notifyUserSMS(user.id, 'payment-success', [
+                        { name: 'code', value: String(order.code) },
+                        { name: 'price', value: prepay.toLocaleString('fa') },
+                    ])
                 });
 
 
@@ -157,6 +162,10 @@ export default class UserOrderHandler extends RequestHandler {
                             paymentMethod: "DIRECT"
                         }
                     })
+                    await notifyUserSMS(user.id, 'payment-success', [
+                        { name: 'code', value: String(order.code) },
+                        { name: 'price', value: order.finalPrice.toLocaleString('fa') },
+                    ])
                 })
 
                 return {
@@ -246,6 +255,10 @@ export default class UserOrderHandler extends RequestHandler {
                 userId: user.id
             }
         })
+        await notifyUserSMS(user.id, 'order-created', [
+            { name: 'code', value: String(order.code) },
+            { name: 'price', value: finalPrice.toLocaleString('fa') },
+        ])
         return order;
     }
 

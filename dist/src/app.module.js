@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const FsRouter_1 = require("@/core/FsRouter");
+const FsRouter_1 = require("./core/FsRouter");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
