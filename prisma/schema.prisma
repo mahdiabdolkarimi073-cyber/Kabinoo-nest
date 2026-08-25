@@ -33,9 +33,10 @@ model User {
   users          User[]           @relation("self")
   advices        UserAdvice[]
   chat           UserChat?
-  isAuthor       Boolean          @default(false)
-  isShopManager  Boolean          @default(false)
-  isSupport      Boolean          @default(false)
+  isAuthor        Boolean          @default(false)
+  isShopManager   Boolean          @default(false)
+  isSupport       Boolean          @default(false)
+  isContractManager Boolean        @default(false)
   articles       Article[]
   contracts      Contract[]
   announcements  Announcement[]
@@ -374,6 +375,10 @@ model Contract {
   description String   @default("")
   /// @name فایل قرارداد
   file        String
+  /// @name فایل طراحی
+  designFile  String   @default("")
+  /// @name مبلغ نهایی
+  finalPrice  Float    @default(0)
   /// @name وضعیت
   status      ContractStatus @default(DRAFT)
   /// @name تاریخ انقضا
