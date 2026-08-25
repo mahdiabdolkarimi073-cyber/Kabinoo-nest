@@ -35,6 +35,7 @@ model User {
   chat           UserChat?
   isAuthor       Boolean          @default(false)
   isShopManager  Boolean          @default(false)
+  isSupport      Boolean          @default(false)
   articles       Article[]
   contracts      Contract[]
   announcements  Announcement[]
