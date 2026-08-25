@@ -34,8 +34,20 @@ model User {
   advices        UserAdvice[]
   chat           UserChat?
   isAuthor       Boolean          @default(false)
+  isShopManager  Boolean          @default(false)
   articles       Article[]
   contracts      Contract[]
+  announcements  Announcement[]
+}
+
+model Announcement {
+  id         String   @id @default(cuid())
+  title      String
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+  authorId   String
+  author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model ProductColor {
