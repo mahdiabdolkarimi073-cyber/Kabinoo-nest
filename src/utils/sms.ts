@@ -58,6 +58,48 @@ export async function sendSMS(
     }
 }
 
+export async function sendRawSMS(phone: string | number, message: string): Promise<boolean> {
+    const apiKey = process.env['SMSIR_TOKEN'];
+    if (!apiKey) {
+        console.warn('SMSIR_TOKEN not set, skipping SMS');
+        return false;
+    }
+
+    const finalPhone = String(phone).replace(/^0/, '').replace(/^\+98/, '').replace(/^98/, '');
+
+    if (VARS.isDev) {
+        console.log(`[DEV SMS] To: ${finalPhone}, Message: ${message}`);
+        return true;
+    }
+
+    try {
+        const res = await fetch('https://api.sms.ir/v1/send', {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+                'X-API-KEY': apiKey,
+            },
+            body: JSON.stringify({
+                message,
+                mobiles: [finalPhone],
+            }),
+        });
+
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error(`SMS send failed: ${res.status} ${errorText}`);
+            return false;
+        }
+
+        console.log(`SMS sent to ${finalPhone}`);
+        return true;
+    } catch (e) {
+        console.error('SMS send error:', e);
+        return false;
+    }
+}
+
 export async function notifyUserSMS(
     userId: string,
     template: SmsTemplate,

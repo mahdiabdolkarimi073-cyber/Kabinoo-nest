@@ -13,7 +13,7 @@ export default class OffCodeHandler extends RequestHandler {
 
 }
 
-export async function getValidOffCode(userId: string, code: string) {
+export async function getValidOffCode(userId: string, code: string, paymentMethod?: string) {
     const offCode = await prisma.offCode.findUnique({
         where: {
             id: code
@@ -24,5 +24,17 @@ export async function getValidOffCode(userId: string, code: string) {
 
     if (offCode.maxUsage && offCode.used >= offCode.maxUsage) Throw("نمیتوانید از این کد تخفیف استفاده کنید")
 
+    if (offCode.cashOnly && paymentMethod === "INSTALLMENT") {
+        Throw("این کد تخفیف فقط برای پرداخت نقدی (آنلاین) قابل استفاده است");
+    }
+
     return offCode;
+}
+
+export function calculateDiscount(totalPrice: number, offCode: any): number {
+    if (!offCode) return 0;
+    if (offCode.type === "FIXED") {
+        return Math.min(offCode.amount, totalPrice);
+    }
+    return totalPrice / 100 * (offCode.percent || 0);
 }

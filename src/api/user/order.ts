@@ -1,10 +1,11 @@
 import RequestHandler from "@/core/request.handler";
 import { CartItem } from "@prisma/client";
-import { getValidOffCode } from "./offCode";
+import { getValidOffCode, calculateDiscount } from "./offCode";
 import { Get, Post, Req, Res } from "@nestjs/common";
 import { makeEnum, Throw } from '@/utils/built-in';
 import { getPaymentLink, onPaymentSuccessful } from "@/core/payment/Payment";
 import { notifyUserSMS } from "@/utils/sms";
+import { grantReferralReward } from "@/utils/db-utils";
 
 export default class UserOrderHandler extends RequestHandler {
 
@@ -78,10 +79,15 @@ export default class UserOrderHandler extends RequestHandler {
             const order = await prisma.order.findUnique({
                 where: {
                     id: this.get('id') + ""
-                }
+                },
+                include: { offCode: true }
             }) || this.throw("Order not found");
             const method = makeEnum(this.get('method'), "DIRECT", "INSTALLMENT");
             const user = await this.getUser(true);
+
+            if (order.offCode?.cashOnly && method === "INSTALLMENT") {
+                this.throw("کد تخفیف اعمال شده روی این سفارش فقط برای پرداخت نقدی (آنلاین) قابل استفاده است");
+            }
 
             if (method === "INSTALLMENT") {
                 const prepay = +this.get('prepay') || this.throw("مبلغ پیش پرداخت اشتباه است");
@@ -162,6 +168,7 @@ export default class UserOrderHandler extends RequestHandler {
                             paymentMethod: "DIRECT"
                         }
                     })
+                    await grantReferralReward(user.id);
                     await notifyUserSMS(user.id, 'payment-success', [
                         { name: 'code', value: String(order.code) },
                         { name: 'price', value: order.finalPrice.toLocaleString('fa') },
@@ -215,7 +222,8 @@ export default class UserOrderHandler extends RequestHandler {
         if (!items.length) this.throw("هیچ محصولی در سبد خرید شما نیست!")
 
         const totalPrice = items.reduce((i, o) => i + (o.product?.finalPrice || o?.custom?.price || 0) * o.quantity, 0);
-        const finalPrice = totalPrice - (totalPrice / 100 * (offCode?.percent || 0));
+        const discountAmount = calculateDiscount(totalPrice, offCode);
+        const finalPrice = totalPrice - discountAmount;
 
         const order = await prisma.order.create({
             data: {

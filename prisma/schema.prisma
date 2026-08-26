@@ -37,6 +37,7 @@ model User {
   isShopManager   Boolean          @default(false)
   isSupport       Boolean          @default(false)
   isContractManager Boolean        @default(false)
+  wallet         Float             @default(0)
   articles       Article[]
   contracts      Contract[]
   announcements  Announcement[]
@@ -180,11 +181,21 @@ model OrderProduct {
 model OffCode {
   id       String  @id @default(cuid())
   userId   String?
-  percent  Int
+  percent  Int     @default(0)
+  amount   Float   @default(0)
+  type     OffCodeType @default(PERCENT)
+  cashOnly Boolean @default(false)
   used     Int     @default(0)
   maxUsage Int?
   user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   orders   Order[]
+}
+
+enum OffCodeType {
+  /// @name درصدی
+  PERCENT
+  /// @name نقدی
+  FIXED
 }
 
 model Address {
@@ -434,6 +445,12 @@ enum VariableKey {
   MAX_VAM_CH_COUNT
   /// @name تعداد ماه هر چک
   VAM_CH_MONTH
+  /// @name پاداش معرفی به ازای هر کاربر (تومان)
+  REFERRAL_REWARD
+  /// @name حداقل خرید برای اعمال پاداش معرفی (تومان)
+  REFERRAL_MIN_PURCHASE
+  /// @name نوع پاداش معرفی (PER_USER = به ازای هر کاربر, PER_ORDER = به ازای هر سفارش)
+  REFERRAL_REWARD_TYPE
 }
 
 enum DesignType {
