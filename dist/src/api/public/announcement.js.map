@@ -1,0 +1,1 @@
+{"version":3,"file":"announcement.js","sourceRoot":"","sources":["../../../../src/api/public/announcement.ts"],"names":[],"mappings":";;AAAA,gEAAoD;AAEpD,MAAqB,yBAA0B,SAAQ,yBAAc;IACjE,KAAK,CAAC,GAAG;QACL,OAAO,MAAM,CAAC,YAAY,CAAC,QAAQ,CAAC;YAChC,OAAO,EAAE,EAAE,UAAU,EAAE,MAAM,EAAE;SAClC,CAAC,CAAC;IACP,CAAC;CACJ;AAND,4CAMC"}

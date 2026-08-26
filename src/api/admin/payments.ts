@@ -7,12 +7,12 @@ export default class AdminPaymentsHandler extends RequestHandler {
     @All()
     async list(@Req() req: Request, @Res() res: Response) {
         return this.splitInstance(async function () {
-            const page = Number(this.query._page) || 1;
-            const take = Number(this.query._take) || 20;
+            const page = Number(this.params._page) || 1;
+            const take = Number(this.params._take) || 20;
             const skip = (page - 1) * take;
 
             const where: any = {};
-            const status = this.query.status;
+            const status = this.params.status;
             if (status === "PAID") {
                 where.paid_at = { not: null };
             } else if (status === "PENDING") {

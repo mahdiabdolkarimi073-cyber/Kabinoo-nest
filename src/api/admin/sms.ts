@@ -21,10 +21,10 @@ export default class AdminSmsHandler extends RequestHandler {
 
             if (!user) this.throw("کاربر یافت نشد");
 
-            const phone = user.phone;
-            if (typeof phone === 'function') this.throw("شماره تلفن کاربر معتبر نیست");
+            const phone = typeof user.phone === 'function' ? (user.phone as any)() : user.phone;
+            if (!phone || typeof phone !== 'string') this.throw("شماره تلفن کاربر معتبر نیست");
 
-            const ok = await sendRawSMS(phone as string, message.trim());
+            const ok = await sendRawSMS(phone, message.trim());
             if (!ok) this.throw("ارسال پیامک ناموفق بود");
 
             return { success: true, message: "پیامک ارسال شد" };
