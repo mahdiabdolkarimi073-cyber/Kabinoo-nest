@@ -1,13 +1,8 @@
 import PrismaFullHandler from "@/core/prisma.handler";
-import PrismaLimitHandler from "@/core/prisma.limited.handler";
-import RequestHandler from "@/core/request.handler"
-import { Get, Post, Req, Res } from "@nestjs/common";
-import { Product } from "@prisma/client";
-import { Request, Response } from "express"
 
-export default class PublicProducts extends PrismaFullHandler {
+export default class PublicCounselingHandler extends PrismaFullHandler {
     getModel() {
-        return prisma.userAdvice;
+        return prisma.userCounseling;
     }
 
     async additionalPayload() {
@@ -19,7 +14,7 @@ export default class PublicProducts extends PrismaFullHandler {
     }
 
     getName() {
-        return "مشاوره"
+        return "درخواست مشاوره"
     }
 
     async DELETE() {

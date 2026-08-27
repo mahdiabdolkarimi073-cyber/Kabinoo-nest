@@ -13,6 +13,13 @@ export default class AuthorArticleHandler extends PrismaFullHandler {
         return true;
     }
 
+    async additionalPayload() {
+        const userId = this.params["userId"];
+        return {
+            authorId: userId,
+        };
+    }
+
     async GET_findFirst(id: any) {
         const base = await super.GET_findFirst(id);
         const userId = this.params["userId"];

@@ -32,6 +32,7 @@ model User {
   ref            User?            @relation("self", fields: [refId], references: [refCode])
   users          User[]           @relation("self")
   advices        UserAdvice[]
+  counselings    UserCounseling[]
   chat           UserChat?
   isAuthor        Boolean          @default(false)
   isShopManager   Boolean          @default(false)
@@ -366,6 +367,22 @@ model UserAdvice {
   created_at DateTime @default(now())
   phone      String   @unique
   name       String
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// @name درخواست مشاوره
+model UserCounseling {
+  id         String   @id @default(cuid())
+  userId     String?
+  created_at DateTime @default(now())
+  phone      String
+  name       String
+  /// @name نوع مشاوره
+  type       String   @default("GENERAL")
+  /// @name توضیحات
+  description String  @default("")
+  /// @name وضعیت
+  status     String   @default("PENDING")
   user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
