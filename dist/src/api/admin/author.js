@@ -35,7 +35,7 @@ class AdminAuthorHandler extends prisma_handler_1.default {
             name: obj.name,
             email: obj.email,
             nationalCode: obj.nationalCode,
-            phone: obj.phone(),
+            phone: obj.phone,
             joined_at: obj.joined_at,
             isAdmin: obj.isAdmin,
             isAuthor: obj.isAuthor,

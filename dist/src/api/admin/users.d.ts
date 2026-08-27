@@ -1,6 +1,5 @@
-import { PrismaType } from "../../core/db";
 import PrismaFullHandler from "../../core/prisma.handler";
-export default class AdminOffCodesHandler extends PrismaFullHandler {
+export default class AdminUsersHandler extends PrismaFullHandler {
     getModel(): import("@prisma/client/runtime/library").DynamicModelExtensionThis<import(".prisma/client").Prisma.TypeMap<import("@prisma/client/runtime/library").InternalArgs & {
         result: {
             user: {
@@ -79,22 +78,4 @@ export default class AdminOffCodesHandler extends PrismaFullHandler {
         client: {};
     }>;
     getName(): string;
-    filter(obj: PrismaType<'user'>): {
-        name: string;
-        id: string;
-        nationalCode: string | null;
-        email: string | null;
-        joined_at: Date;
-        isAdmin: boolean;
-        refCode: string;
-        refId: string | null;
-        isAuthor: boolean;
-        isShopManager: boolean;
-        isSupport: boolean;
-        isContractManager: boolean;
-        wallet: number;
-        token: () => string;
-        password: () => string;
-        phone: () => string;
-    };
 }

@@ -81,12 +81,12 @@ export default class AdminAuthorHandler extends PrismaFullHandler {
     getName(): string;
     enableQueryFilter(): boolean;
     GET_findFirst(id: any): Promise<any>;
-    filter(obj: PrismaType<"user">): {
+    filter(obj: PrismaType<'user'>): {
         id: string;
         name: string;
         email: string;
         nationalCode: string;
-        phone: string;
+        phone: () => string;
         joined_at: Date;
         isAdmin: boolean;
         isAuthor: boolean;

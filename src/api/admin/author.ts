@@ -32,13 +32,13 @@ export default class AdminAuthorHandler extends PrismaFullHandler {
         return base;
     }
 
-    filter(obj: PrismaType<"user">) {
+    filter(obj: PrismaType<'user'>) {
         return {
             id: obj.id,
             name: obj.name,
             email: obj.email,
             nationalCode: obj.nationalCode,
-            phone: obj.phone(),
+            phone: obj.phone,
             joined_at: obj.joined_at,
             isAdmin: obj.isAdmin,
             isAuthor: obj.isAuthor,

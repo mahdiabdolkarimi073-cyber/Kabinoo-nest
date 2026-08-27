@@ -8,10 +8,6 @@ class SupportUsersHandler extends prisma_handler_1.default {
     getName() {
         return "کاربر ";
     }
-    filter(obj) {
-        obj.phone = obj.phone();
-        return obj;
-    }
     async beforeEdit(fields) {
         delete fields.isAdmin;
         delete fields.isShopManager;

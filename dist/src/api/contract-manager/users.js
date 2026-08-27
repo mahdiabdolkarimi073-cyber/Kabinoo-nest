@@ -32,10 +32,6 @@ class ContractManagerUsersHandler extends prisma_handler_1.default {
             data,
         });
     }
-    filter(obj) {
-        obj.phone = obj.phone();
-        return obj;
-    }
 }
 exports.default = ContractManagerUsersHandler;
 //# sourceMappingURL=users.js.map

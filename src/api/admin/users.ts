@@ -1,7 +1,6 @@
-import { PrismaType } from "@/core/db";
 import PrismaFullHandler from "@/core/prisma.handler";
 
-export default class AdminOffCodesHandler extends PrismaFullHandler {
+export default class AdminUsersHandler extends PrismaFullHandler {
 
     getModel() {
         return prisma.user;
@@ -9,11 +8,6 @@ export default class AdminOffCodesHandler extends PrismaFullHandler {
 
     getName() {
         return "کاربر "
-    }
-
-    filter(obj: PrismaType<'user'>) {
-        obj.phone = obj.phone() as any;
-        return obj;
     }
 
 }

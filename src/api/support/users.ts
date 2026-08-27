@@ -1,4 +1,3 @@
-import { PrismaType } from "@/core/db";
 import PrismaFullHandler from "@/core/prisma.handler";
 
 export default class SupportUsersHandler extends PrismaFullHandler {
@@ -9,11 +8,6 @@ export default class SupportUsersHandler extends PrismaFullHandler {
 
     getName() {
         return "کاربر "
-    }
-
-    filter(obj: PrismaType<'user'>) {
-        obj.phone = obj.phone() as any;
-        return obj;
     }
 
     async beforeEdit(fields: any) {

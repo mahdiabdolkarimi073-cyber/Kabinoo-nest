@@ -1,4 +1,3 @@
-import { PrismaType } from "@/core/db";
 import PrismaFullHandler from "@/core/prisma.handler";
 
 export default class ContractManagerUsersHandler extends PrismaFullHandler {
@@ -33,10 +32,5 @@ export default class ContractManagerUsersHandler extends PrismaFullHandler {
             where: { id: id as string },
             data,
         });
-    }
-
-    filter(obj: PrismaType<'user'>) {
-        obj.phone = obj.phone() as any;
-        return obj;
     }
 }
