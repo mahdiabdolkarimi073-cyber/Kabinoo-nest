@@ -41,6 +41,38 @@ model User {
   articles       Article[]
   contracts      Contract[]
   announcements  Announcement[]
+  userFiles      UserFile[]
+  notifications  UserNotification[]
+}
+
+/// @name فایل کاربر
+model UserFile {
+  id          String   @id @default(cuid())
+  /// @name عنوان فایل
+  title       String
+  /// @name توضیحات
+  description String   @default("")
+  /// @name مسیر فایل
+  file        String
+  /// @name نام فایل اصلی
+  fileName    String   @default("")
+  created_at  DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// @name اطلاعیه کاربر
+model UserNotification {
+  id         String   @id @default(cuid())
+  /// @name عنوان
+  title      String
+  /// @name محتوا
+  content    String
+  /// @name خوانده شده
+  read       Boolean  @default(false)
+  created_at DateTime @default(now())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Announcement {
