@@ -13,15 +13,15 @@ export declare function ensureHomepageDefaults(): Promise<void>;
 export default class HomepageHandler extends RequestHandler {
     GET(): Promise<{
         key: string;
-        id: number;
-        sortOrder: number;
         description: string;
         title: string;
+        id: number;
         image: string;
         updatedAt: Date;
         subtitle: string;
         buttonLabel: string;
         buttonHref: string;
         enabled: boolean;
+        sortOrder: number;
     }[]>;
 }

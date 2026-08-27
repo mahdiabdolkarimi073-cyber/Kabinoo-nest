@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendSMS = sendSMS;
+exports.sendRawSMS = sendRawSMS;
 exports.notifyUserSMS = notifyUserSMS;
 const global_1 = require("../global");
 const TEMPLATE_IDS = {
@@ -42,6 +43,43 @@ async function sendSMS(phone, template, parameters) {
             return false;
         }
         console.log(`SMS sent to ${finalPhone}, template: ${template}`);
+        return true;
+    }
+    catch (e) {
+        console.error('SMS send error:', e);
+        return false;
+    }
+}
+async function sendRawSMS(phone, message) {
+    const apiKey = process.env['SMSIR_TOKEN'];
+    if (!apiKey) {
+        console.warn('SMSIR_TOKEN not set, skipping SMS');
+        return false;
+    }
+    const finalPhone = String(phone).replace(/^0/, '').replace(/^\+98/, '').replace(/^98/, '');
+    if (global_1.VARS.isDev) {
+        console.log(`[DEV SMS] To: ${finalPhone}, Message: ${message}`);
+        return true;
+    }
+    try {
+        const res = await fetch('https://api.sms.ir/v1/send', {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+                'X-API-KEY': apiKey,
+            },
+            body: JSON.stringify({
+                message,
+                mobiles: [finalPhone],
+            }),
+        });
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error(`SMS send failed: ${res.status} ${errorText}`);
+            return false;
+        }
+        console.log(`SMS sent to ${finalPhone}`);
         return true;
     }
     catch (e) {

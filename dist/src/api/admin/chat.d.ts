@@ -1,5 +1,5 @@
 import PrismaFullHandler from "../../core/prisma.handler";
-export default class AdminOffCodesHandler extends PrismaFullHandler {
+export default class AdminChatHandler extends PrismaFullHandler {
     getModel(): import("@prisma/client/runtime/library").DynamicModelExtensionThis<import(".prisma/client").Prisma.TypeMap<import("@prisma/client/runtime/library").InternalArgs & {
         result: {
             user: {

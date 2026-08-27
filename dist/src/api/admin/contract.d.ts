@@ -81,14 +81,16 @@ export default class AdminContractHandler extends PrismaFullHandler {
     getName(): string;
     upload(body: any, req: any, res: Response): Promise<any>;
     PUT(): Promise<{
-        id: string;
         description: string;
         title: string;
+        id: string;
         userId: string | null;
         created_at: Date;
         status: import(".prisma/client").$Enums.ContractStatus;
+        finalPrice: number;
         updated_at: Date;
         file: string;
+        designFile: string;
         expire_at: Date | null;
     }>;
     filter(obj: any): any;

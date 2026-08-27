@@ -43,6 +43,10 @@ export default class RequestHandler {
         refCode: string;
         refId: string | null;
         isAuthor: boolean;
+        isShopManager: boolean;
+        isSupport: boolean;
+        isContractManager: boolean;
+        wallet: number;
         token: () => string;
         password: () => string;
         phone: () => string;

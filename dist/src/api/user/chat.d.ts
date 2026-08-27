@@ -95,6 +95,10 @@ export default class Chat extends PrismaFullHandler {
             refCode: string;
             refId: string | null;
             isAuthor: boolean;
+            isShopManager: boolean;
+            isSupport: boolean;
+            isContractManager: boolean;
+            wallet: number;
             token: () => string;
             password: () => string;
             phone: () => string;
@@ -111,13 +115,17 @@ export default class Chat extends PrismaFullHandler {
             refCode: string;
             refId: string | null;
             isAuthor: boolean;
+            isShopManager: boolean;
+            isSupport: boolean;
+            isContractManager: boolean;
+            wallet: number;
             token: () => string;
             password: () => string;
             phone: () => string;
         };
         messages: {
-            id: string;
             content: string;
+            id: string;
             isAdmin: boolean;
             created_at: Date;
             chatId: string;
@@ -141,13 +149,17 @@ export default class Chat extends PrismaFullHandler {
             refCode: string;
             refId: string | null;
             isAuthor: boolean;
+            isShopManager: boolean;
+            isSupport: boolean;
+            isContractManager: boolean;
+            wallet: number;
             token: () => string;
             password: () => string;
             phone: () => string;
         };
         messages: {
-            id: string;
             content: string;
+            id: string;
             isAdmin: boolean;
             created_at: Date;
             chatId: string;

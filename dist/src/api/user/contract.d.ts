@@ -80,24 +80,28 @@ export default class UserContractHandler extends PrismaLimitHandler {
     }>;
     getName(): string;
     GET(): Promise<{
-        id: string;
         description: string;
         title: string;
+        id: string;
         userId: string | null;
         created_at: Date;
         status: import(".prisma/client").$Enums.ContractStatus;
+        finalPrice: number;
         updated_at: Date;
         file: string;
+        designFile: string;
         expire_at: Date | null;
     } | {
-        id: string;
         description: string;
         title: string;
+        id: string;
         userId: string | null;
         created_at: Date;
         status: import(".prisma/client").$Enums.ContractStatus;
+        finalPrice: number;
         updated_at: Date;
         file: string;
+        designFile: string;
         expire_at: Date | null;
     }[]>;
 }

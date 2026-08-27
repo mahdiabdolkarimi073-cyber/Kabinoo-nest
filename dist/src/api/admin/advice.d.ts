@@ -1,5 +1,5 @@
 import PrismaFullHandler from "../../core/prisma.handler";
-export default class PublicProducts extends PrismaFullHandler {
+export default class AdminAdviceHandler extends PrismaFullHandler {
     getModel(): import("@prisma/client/runtime/library").DynamicModelExtensionThis<import(".prisma/client").Prisma.TypeMap<import("@prisma/client/runtime/library").InternalArgs & {
         result: {
             user: {

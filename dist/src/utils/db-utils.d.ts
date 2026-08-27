@@ -6,3 +6,4 @@ declare global {
 }
 export declare function dbSecureProp<T extends Function>(func: T): T;
 export declare function Callable<T extends Function>(func: T): T;
+export declare function grantReferralReward(userId: string): Promise<void>;

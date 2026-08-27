@@ -17,9 +17,12 @@ export default class UserOrderHandler extends RequestHandler {
             postal: string | null;
         };
         offCode: {
+            type: import(".prisma/client").$Enums.OffCodeType;
             id: string;
             userId: string | null;
             percent: number;
+            amount: number;
+            cashOnly: boolean;
             used: number;
             maxUsage: number | null;
         };
@@ -36,8 +39,8 @@ export default class UserOrderHandler extends RequestHandler {
         products: ({
             product: {
                 name: string;
-                id: string;
                 description: string;
+                id: string;
                 created_at: Date;
                 price: number;
                 updated_at: Date;
@@ -79,10 +82,10 @@ export default class UserOrderHandler extends RequestHandler {
             created_at: Date;
             image: string;
             status: string;
+            amount: number;
             paymentId: string | null;
             expire_at: Date;
             start_at: Date;
-            amount: number;
             checkId: string;
             adminNote: string | null;
             orderId: string;
