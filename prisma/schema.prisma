@@ -484,11 +484,11 @@ enum OrderStatus {
 }
 
 enum VariableKey {
-  /// @name درصد مالیات درگاه پرداخت
+  /// @name درصد کرمزد درگاه پرداخت
   PAY_FEE
-  /// @name درصد مالیات اقساط
+  /// @name درصد کرمزد اقساط
   VAM_FEE
-  /// @name حداکثر ماه بدون مالیات
+  /// @name حداکثر ماه بدون کرمزد
   VAM_NOFEE_MONTH
   /// @name حداکثر تعداد چک
   MAX_VAM_CH_COUNT
