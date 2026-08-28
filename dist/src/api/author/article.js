@@ -11,6 +11,12 @@ class AuthorArticleHandler extends prisma_handler_1.default {
     isFullAccess() {
         return true;
     }
+    async additionalPayload() {
+        const userId = this.params["userId"];
+        return {
+            authorId: userId,
+        };
+    }
     async GET_findFirst(id) {
         const base = await super.GET_findFirst(id);
         const userId = this.params["userId"];

@@ -89,6 +89,7 @@ export default class UserOrderHandler extends RequestHandler {
             checkId: string;
             adminNote: string | null;
             orderId: string;
+            receiverNationalCode: string;
         }[];
     } & {
         id: string;

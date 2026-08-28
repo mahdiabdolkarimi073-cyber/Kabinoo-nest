@@ -8,8 +8,9 @@ class PublicProducts extends prisma_handler_1.default {
     async additionalPayload() {
         if (this.get('phone') && isNaN(+this.get('phone')))
             return this.throw("شماره تلفن معتبر نیست");
+        const user = await this.getUser();
         return {
-            userId: (await this.getUser()).id
+            userId: user?.id,
         };
     }
     getName() {

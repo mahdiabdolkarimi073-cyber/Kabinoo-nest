@@ -79,6 +79,9 @@ export default class AuthorArticleHandler extends PrismaFullHandler {
     }>;
     getName(): string;
     isFullAccess(): boolean;
+    additionalPayload(): Promise<{
+        authorId: string;
+    }>;
     GET_findFirst(id: any): Promise<any>;
     beforeCreate(fields: any): Promise<any>;
     beforeEdit(fields: any): Promise<any>;

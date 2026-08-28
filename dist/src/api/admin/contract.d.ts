@@ -80,6 +80,7 @@ export default class AdminContractHandler extends PrismaFullHandler {
     }>;
     getName(): string;
     upload(body: any, req: any, res: Response): Promise<any>;
+    uploadDesign(body: any, req: any, res: Response): Promise<any>;
     PUT(): Promise<{
         description: string;
         title: string;
