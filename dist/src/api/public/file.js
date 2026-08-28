@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const node_fs_1 = require("node:fs");
+const fs = require("node:fs");
 const path = require("node:path");
 const process = require("node:process");
 const mime = require("mime-types");
@@ -24,8 +25,9 @@ class UploadedHandler extends request_handler_1.default {
     async file(req) {
         return this.splitInstance(function () {
             const filePath = req.params['path'];
-            const _path = path.join(process.cwd(), upload_1.UPLOAD_DIR, Array.isArray(filePath) ? filePath[0] : filePath);
-            if (!(0, node_fs_1.existsSync)(_path)) {
+            const segments = Array.isArray(filePath) ? filePath : [filePath];
+            const _path = path.join(process.cwd(), upload_1.UPLOAD_DIR, ...segments);
+            if (!(0, node_fs_1.existsSync)(_path) || fs.statSync(_path).isDirectory()) {
                 return "404";
             }
             const st = (0, node_fs_1.createReadStream)(_path);
@@ -37,7 +39,7 @@ class UploadedHandler extends request_handler_1.default {
 }
 exports.default = UploadedHandler;
 __decorate([
-    (0, common_1.Get)(":path"),
+    (0, common_1.Get)("*path"),
     (0, common_1.Header)('Cache-Control', 'max-age=3600'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),

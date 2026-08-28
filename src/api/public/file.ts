@@ -2,6 +2,7 @@
 import { Get, Header, Req, Res, StreamableFile } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { createReadStream, existsSync } from 'node:fs';
+import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 import * as process from 'node:process';
@@ -12,13 +13,14 @@ import { ServerResponse } from 'node:http';
 
 export default class UploadedHandler extends RequestHandler {
 
-    @Get(":path")
+    @Get("*path")
     @Header('Cache-Control', 'max-age=3600')
     async file(@Req() req: Request) {
         return this.splitInstance(function () {
             const filePath = req.params['path'];
-            const _path = path.join(process.cwd(), UPLOAD_DIR, Array.isArray(filePath) ? filePath[0] : filePath);
-            if (!existsSync(_path)) {
+            const segments = Array.isArray(filePath) ? filePath : [filePath];
+            const _path = path.join(process.cwd(), UPLOAD_DIR, ...segments);
+            if (!existsSync(_path) || fs.statSync(_path).isDirectory()) {
                 return "404";
             }
             const st = createReadStream(_path);

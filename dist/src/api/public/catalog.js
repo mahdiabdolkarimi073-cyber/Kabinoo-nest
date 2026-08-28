@@ -22,10 +22,20 @@ class PublicCatalogHandler extends prisma_limited_handler_1.default {
         return "کاتالوگ";
     }
     async GET() {
-        return prisma.catalog.findMany({
+        const catalogs = await prisma.catalog.findMany({
             where: { enabled: true },
             orderBy: { sortOrder: "asc" },
         });
+        return catalogs.map(c => ({
+            id: c.id,
+            title: c.title,
+            slug: c.slug,
+            description: c.description,
+            coverImage: c.coverImage,
+            pages: c.pages,
+            zipPath: c.zipPath,
+            entryFile: c.entryFile,
+        }));
     }
     async bySlug(req, res) {
         this.splitInstance(async function () {
@@ -37,7 +47,16 @@ class PublicCatalogHandler extends prisma_limited_handler_1.default {
             });
             if (!catalog)
                 this.throw("کاتالوگ یافت نشد");
-            return catalog;
+            return {
+                id: catalog.id,
+                title: catalog.title,
+                slug: catalog.slug,
+                description: catalog.description,
+                coverImage: catalog.coverImage,
+                pages: catalog.pages,
+                zipPath: catalog.zipPath,
+                entryFile: catalog.entryFile,
+            };
         }, req, res);
     }
 }

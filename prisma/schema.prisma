@@ -271,6 +271,10 @@ model Catalog {
   description String   @default("")
   coverImage  String   @default("")
   pages       String[] @default([])
+  /// @name مسیر کاتالوگ زیپ (نسبت به /uploaded)
+  zipPath     String   @default("")
+  /// @name فایل ورودی HTML داخل زیپ
+  entryFile   String   @default("")
   enabled     Boolean  @default(true)
   sortOrder   Int      @default(0)
   created_at  DateTime @default(now())

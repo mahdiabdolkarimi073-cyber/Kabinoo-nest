@@ -80,16 +80,14 @@ export default class PublicCatalogHandler extends PrismaLimitHandler {
     }>;
     getName(): string;
     GET(): Promise<{
-        description: string;
-        title: string;
         id: string;
-        created_at: Date;
+        title: string;
         slug: string;
-        updated_at: Date;
-        enabled: boolean;
-        sortOrder: number;
+        description: string;
         coverImage: string;
         pages: string[];
+        zipPath: any;
+        entryFile: any;
     }[]>;
     bySlug(req: Request, res: Response): Promise<void>;
 }
