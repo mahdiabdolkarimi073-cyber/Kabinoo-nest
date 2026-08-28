@@ -411,19 +411,21 @@ model PaymentAction {
 }
 
 model PaymentCheck {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  start_at   DateTime
-  expire_at  DateTime
-  amount     Float
-  checkId    String
-  image      String
-  status     String   @default("PENDING")
-  adminNote  String?
-  orderId    String
-  paymentId  String?
-  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  payment    Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+  id                   Int      @id @default(autoincrement())
+  created_at           DateTime @default(now())
+  start_at             DateTime
+  expire_at            DateTime
+  amount               Float
+  checkId              String
+  image                String
+  status               String   @default("PENDING")
+  adminNote            String?
+  orderId              String
+  paymentId            String?
+  /// @name کد ملی گیرنده چک
+  receiverNationalCode String   @default("")
+  order                Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  payment              Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
 }
 
 /// @name قرارداد
@@ -507,6 +509,23 @@ enum DesignType {
   PRICE
   /// @name مدل سه بعدی
   MODEL
+}
+
+/// @name نوع درخواست طراحی
+model RequestType {
+  id          String   @id @default(cuid())
+  /// @name عنوان نوع درخواست
+  label       String
+  /// @name کلید (انگلیسی)
+  key         String   @unique
+  /// @name توضیحات
+  description String   @default("")
+  /// @name فعال
+  enabled     Boolean  @default(true)
+  /// @name ترتیب نمایش
+  sortOrder   Int      @default(0)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
 }
 
 model CalcPriceSetting {
