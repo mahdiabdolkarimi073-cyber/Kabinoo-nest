@@ -125,8 +125,7 @@ export default class CatalogZipHandler extends RequestHandler {
     }
 
     async DELETE() {
-        const id = this.getTargetId();
-        if (!id) this.throw({ code: 400, message: 'شناسه کاتالوگ وارد نشده' });
+        const id = this.get("id", "شناسه کاتالوگ وارد نشده است");
 
         const catalog = await prisma.catalog.findUnique({ where: { id } });
         if (!catalog) this.throw({ code: 404, message: 'کاتالوگ یافت نشد' });
