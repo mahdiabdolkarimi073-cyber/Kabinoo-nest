@@ -18,10 +18,10 @@ export default class HomepageHandler extends RequestHandler {
         id: number;
         image: string;
         updatedAt: Date;
+        enabled: boolean;
+        sortOrder: number;
         subtitle: string;
         buttonLabel: string;
         buttonHref: string;
-        enabled: boolean;
-        sortOrder: number;
     }[]>;
 }

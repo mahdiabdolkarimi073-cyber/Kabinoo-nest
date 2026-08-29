@@ -86,8 +86,8 @@ export default class PublicCatalogHandler extends PrismaLimitHandler {
         description: string;
         coverImage: string;
         pages: string[];
-        zipPath: any;
-        entryFile: any;
+        zipPath: string;
+        entryFile: string;
     }[]>;
     bySlug(req: Request, res: Response): Promise<void>;
 }
